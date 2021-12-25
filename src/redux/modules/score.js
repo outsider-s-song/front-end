@@ -1,25 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	number: 0,
+	isModal: false,
+	noteInfo: {},
 };
 
 const scoreSlice = createSlice({
-	name: 'test',
+	name: 'score',
 	initialState: initialState,
 	reducers: {
-		add: (state, action) => {
-			state.number += 1;
+		UpdateModal: (state, { payload }) => {
+			state.isModal = payload;
 		},
-		minus: (state, action) => {
-			state.number -= 1;
+		GetNoteInfo: (state, { payload }) => {
+			state.noteInfo = payload;
 		},
 	},
 	extraReducers: {},
 });
 
 //* reducer export
-export const { add, minus } = scoreSlice.actions;
+export const { UpdateModal, GetNoteInfo } = scoreSlice.actions;
 
 //* slice export
 export default scoreSlice;
