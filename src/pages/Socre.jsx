@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Modal from '../components/Modal';
@@ -7,13 +7,17 @@ import { UpdateModal } from '../redux/modules/score';
 import { CgPlayButtonO, CgPlayPauseO, CgMenuGridO } from 'react-icons/cg';
 import { useNavigate } from 'react-router';
 import * as Tone from 'tone';
+import { getNoteListMD } from '../redux/async/score';
 
 const Socre = () => {
-	const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-	const now = Tone.now();
 	const disptach = useDispatch();
 	const navigate = useNavigate();
 	const [musicStatus, setMusicStatus] = useState(false);
+
+	useEffect(() => {
+		const id = window.location.pathname.split('/')[2];
+		disptach(getNoteListMD(id));
+	}, []);
 
 	return (
 		<>
@@ -31,7 +35,9 @@ const Socre = () => {
 					<PlayerContainer>
 						{musicStatus ? (
 							<CgPlayPauseO
-								onClick={() => setMusicStatus(false)}
+								onClick={() => {
+									setMusicStatus(false);
+								}}
 								size="6rem"
 								color="white"
 								cursor={'pointer'}
@@ -39,6 +45,8 @@ const Socre = () => {
 						) : (
 							<CgPlayButtonO
 								onClick={() => {
+									const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+									const now = Tone.now();
 									setMusicStatus(true);
 									synth.triggerAttackRelease('D4', '8n', now);
 									synth.triggerAttackRelease('F4', '8n', now + 0.5);

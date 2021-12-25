@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import * as Tone from 'tone';
 import { UpdateModal, GetNoteInfo } from '../redux/modules/score';
 
 const Note = (props) => {
-	const [isLoaded, setLoaded] = useState(false);
 	const dispatch = useDispatch();
 	const isModal = useSelector((state) => state.score.isModal);
-	const synth = new Tone.Synth().toDestination();
-	const { userNick, color, note, location, desc, isMemo } = props;
+
+	const { color, content, index, noteId, scoreId, status, userNick, note } = props;
 
 	const getNote = () => {
-		Tone.start();
-		synth.triggerAttackRelease('G4', '16n');
+		const synth = new Tone.Synth().toDestination();
+		synth.triggerAttackRelease(note[0], note[1]);
 
-		isMemo ? dispatch(GetNoteInfo(props)) : dispatch(GetNoteInfo(false));
+		dispatch(GetNoteInfo(props));
 		dispatch(UpdateModal(!isModal));
 	};
 
@@ -25,19 +24,22 @@ const Note = (props) => {
 
 	return (
 		<>
-			<NoteFront color={color} onClick={noteHandler} />
+			<NoteFront color={color} status={status} onClick={noteHandler} />
 		</>
 	);
 };
 
 Note.defaultProps = {
-	userNick: 'kyuung',
-	content: '안녕',
-	isMemo: true,
-	note: 'G5',
 	color: 'red',
-	index: 0,
+	content: '메리크리스마스',
+	index: '1',
+	noteId: '1',
+	scoreId: '1',
+	status: false,
+	userNick: 'kyuung',
+	note: ['G4', '16n'],
 };
+// #224732
 
 const NoteFront = styled.button`
 	border: none;
@@ -54,7 +56,11 @@ const NoteFront = styled.button`
 	}
 	transition: opacity 180ms ease-in-out;
 	transition: transform 250ms ease-in-out;
-	background: radial-gradient(circle at 70px 70px, ${(props) => props.color}, #fff);
+	background: radial-gradient(
+		circle at 70px 70px,
+		${(props) => (props.status ? props.color : '#224732')},
+		#fff
+	);
 	transform-style: preserve-3d;
 	transform-origin: right;
 `;
