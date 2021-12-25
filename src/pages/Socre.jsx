@@ -6,8 +6,11 @@ import NoteContainer from '../components/NoteContainer';
 import { UpdateModal } from '../redux/modules/score';
 import { CgPlayButtonO, CgPlayPauseO, CgMenuGridO } from 'react-icons/cg';
 import { useNavigate } from 'react-router';
+import * as Tone from 'tone';
 
 const Socre = () => {
+	const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+	const now = Tone.now();
 	const disptach = useDispatch();
 	const navigate = useNavigate();
 	const [musicStatus, setMusicStatus] = useState(false);
@@ -19,11 +22,12 @@ const Socre = () => {
 					disptach(UpdateModal(false));
 				}}
 			>
+				<Title>Score 1</Title>
 				<div onClick={(e) => e.stopPropagation()}>
-					<GoToCollection onClick={() => navigate('/collection')}>
+					<GoToCollection onClick={() => navigate('/')}>
 						<CgMenuGridO cursor="pointer" size="6rem" color="white" />
 					</GoToCollection>
-					<Title>Score 1</Title>
+
 					<PlayerContainer>
 						{musicStatus ? (
 							<CgPlayPauseO
@@ -34,7 +38,15 @@ const Socre = () => {
 							/>
 						) : (
 							<CgPlayButtonO
-								onClick={() => setMusicStatus(true)}
+								onClick={() => {
+									setMusicStatus(true);
+									synth.triggerAttackRelease('D4', '8n', now);
+									synth.triggerAttackRelease('F4', '8n', now + 0.5);
+									synth.triggerAttackRelease('A4', '8n', now + 1);
+									synth.triggerAttackRelease('C5', '8n', now + 1.5);
+									synth.triggerAttackRelease('E5', '8n', now + 2);
+									// synth.triggerRelease(['D4', 'F4', 'A4', 'C5', 'E5'], now + 4);
+								}}
 								size="6rem"
 								color="white"
 								cursor={'pointer'}
@@ -51,6 +63,7 @@ const Socre = () => {
 
 const Background = styled.section`
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 100vw;

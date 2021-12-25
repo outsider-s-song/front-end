@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 const instance = axios.create({
-	baseURL: '',
+	baseURL: 'http://jhhong0930.shop/',
 	headers: {
 		'content-type': 'application/json;charset=UTF-8',
 		accept: 'application/json',
-		//   Authorization: `Bearer ${cookies.get("token")}`,
 		'Access-Control-Allow-Origin': '*',
 	},
 	withCredentials: true,
