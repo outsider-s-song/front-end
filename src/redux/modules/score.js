@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getScoresListMD, getNoteListMD } from '../async/score';
+import { getScoresListMD, getNoteListMD, postNoteMD } from '../async/score';
 
 const initialState = {
 	isModal: false,
 	scores: {},
 	noteInfo: {},
 	score: {},
+	test: {},
 };
 
 const scoreSlice = createSlice({
@@ -18,10 +19,20 @@ const scoreSlice = createSlice({
 		GetNoteInfo: (state, { payload }) => {
 			state.noteInfo = payload;
 		},
+		UpdateNoteInfo: (state, { payload }) => {
+			state.noteInfo = payload;
+		},
 	},
 	extraReducers: {
 		[getScoresListMD.fulfilled]: (state, { payload }) => {
 			state.scores = payload.data;
+		},
+		[postNoteMD.fulfilled]: (state, { payload }) => {
+			const idx = state.noteInfo.index;
+			const list = state.score[idx];
+			state.score[idx].status = true;
+			state.test = list;
+			state.isModal = false;
 		},
 		[getNoteListMD.fulfilled]: (state, { payload }) => {
 			state.score = payload.data;
@@ -30,7 +41,7 @@ const scoreSlice = createSlice({
 });
 
 //* reducer export
-export const { UpdateModal, GetNoteInfo } = scoreSlice.actions;
+export const { UpdateModal, GetNoteInfo, UpdateNoteInfo } = scoreSlice.actions;
 
 //* slice export
 export default scoreSlice;

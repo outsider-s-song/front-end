@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { CgCloseO } from 'react-icons/cg';
 import { UpdateModal } from '../redux/modules/score';
+import { postNoteMD } from '../redux/async/score';
 
 const Modal = () => {
 	const dispatch = useDispatch();
+
+	const nickname = useRef();
+	const comment = useRef();
+	const pw = useRef();
+
 	const noteInfo = useSelector((state) => state.score.noteInfo);
 	const isModal = useSelector((state) => state.score.isModal);
+
+	const score = useSelector((state) => state.score.score);
+	const list = useSelector((state) => state.score.test);
+
+	const postNote = () => {
+		if (!nickname.current.value || !pw.current.value || !comment.current.value) {
+			alert('내용을 전부 채워주세요!');
+		} else {
+			const data = {
+				userNick: nickname.current.value,
+				userPw: pw.current.value,
+				contents: comment.current.value,
+				index: noteInfo.index,
+				scoreId: Number(window.location.pathname.split('/')[2]),
+			};
+			dispatch(postNoteMD(data));
+		}
+	};
 
 	return (
 		<>
@@ -27,13 +51,19 @@ const Modal = () => {
 					</Memo>
 				) : (
 					<Memo>
-						<Label>이름을 입력해주세요</Label>
-						<Input />
+						<Label
+							onClick={() => {
+								console.log(list);
+							}}
+						>
+							이름을 입력해주세요
+						</Label>
+						<Input ref={nickname} />
 						<Label>한마디를 남겨주세요</Label>
-						<Input />
+						<Input ref={comment} />
 						<Label>비밀번호를 입력해주세요</Label>
-						<Input />
-						<PostBtn>남기기</PostBtn>
+						<Input ref={pw} />
+						<PostBtn onClick={postNote}>남기기</PostBtn>
 					</Memo>
 				))}
 		</>
