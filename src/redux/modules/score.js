@@ -21,7 +21,7 @@ const scoreSlice = createSlice({
 	},
 	extraReducers: {
 		[getScoresListMD.fulfilled]: (state, { payload }) => {
-			console.log(payload);
+			state.scores = payload.data;
 		},
 		[getNoteListMD.fulfilled]: (state, { payload }) => {
 			state.score = payload.data;

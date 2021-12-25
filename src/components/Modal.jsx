@@ -8,10 +8,11 @@ const Modal = () => {
 	const dispatch = useDispatch();
 	const noteInfo = useSelector((state) => state.score.noteInfo);
 	const isModal = useSelector((state) => state.score.isModal);
+
 	return (
 		<>
 			{isModal &&
-				(noteInfo ? (
+				(noteInfo.status ? (
 					<Memo>
 						<ExitBtn>
 							<CgCloseO

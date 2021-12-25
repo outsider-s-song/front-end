@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Modal from '../components/Modal';
 import NoteContainer from '../components/NoteContainer';
@@ -7,7 +7,7 @@ import { UpdateModal } from '../redux/modules/score';
 import { CgPlayButtonO, CgPlayPauseO, CgMenuGridO } from 'react-icons/cg';
 import { useNavigate } from 'react-router';
 import * as Tone from 'tone';
-import { getNoteListMD } from '../redux/async/score';
+import { getNoteListMD, getScoresListMD } from '../redux/async/score';
 
 const Socre = () => {
 	const disptach = useDispatch();
@@ -17,7 +17,19 @@ const Socre = () => {
 	useEffect(() => {
 		const id = window.location.pathname.split('/')[2];
 		disptach(getNoteListMD(id));
+		disptach(getScoresListMD());
 	}, []);
+
+	let collection = useSelector((state) => state.score.scores);
+
+	collection =
+		collection.length > 0 &&
+		collection?.filter(
+			(score) => score.scoredId === Number(window.location.pathname.split('/')[2])
+		);
+	const noteList = collection[0]?.noteList;
+	const musicArray = [];
+	noteList?.map((note) => musicArray.push(note.note));
 
 	return (
 		<>
@@ -46,14 +58,17 @@ const Socre = () => {
 							<CgPlayButtonO
 								onClick={() => {
 									const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-									const now = Tone.now();
+									let now = Tone.now();
 									setMusicStatus(true);
-									synth.triggerAttackRelease('D4', '8n', now);
-									synth.triggerAttackRelease('F4', '8n', now + 0.5);
-									synth.triggerAttackRelease('A4', '8n', now + 1);
-									synth.triggerAttackRelease('C5', '8n', now + 1.5);
-									synth.triggerAttackRelease('E5', '8n', now + 2);
-									// synth.triggerRelease(['D4', 'F4', 'A4', 'C5', 'E5'], now + 4);
+
+									for (let i = 0; i < musicArray.length; i++) {
+										synth.triggerAttackRelease(
+											musicArray[i][0],
+											musicArray[i][1],
+											now
+										);
+										now += 0.5;
+									}
 								}}
 								size="6rem"
 								color="white"
