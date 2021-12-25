@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import * as Tone from 'tone';
 import { UpdateModal, GetNoteInfo } from '../redux/modules/score';
 
 const Note = (props) => {
+	const [isLoaded, setLoaded] = useState(false);
 	const dispatch = useDispatch();
 	const isModal = useSelector((state) => state.score.isModal);
 	const synth = new Tone.Synth().toDestination();
 	const { userNick, color, note, location, desc, isMemo } = props;
 
 	const getNote = () => {
-		// synth.triggerAttackRelease('G4', '16n');
+		Tone.start();
+		synth.triggerAttackRelease('G4', '16n');
+
 		isMemo ? dispatch(GetNoteInfo(props)) : dispatch(GetNoteInfo(false));
 		dispatch(UpdateModal(!isModal));
 	};
@@ -30,7 +33,7 @@ const Note = (props) => {
 Note.defaultProps = {
 	userNick: 'kyuung',
 	content: '안녕',
-	isMemo: false,
+	isMemo: true,
 	note: 'G5',
 	color: 'red',
 	index: 0,
