@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { CgCloseO } from 'react-icons/cg';
 import { UpdateModal } from '../redux/modules/score';
+import { postNoteMD } from '../redux/async/score';
 
 const Modal = () => {
 	const dispatch = useDispatch();
@@ -13,12 +14,23 @@ const Modal = () => {
 
 	const noteInfo = useSelector((state) => state.score.noteInfo);
 	const isModal = useSelector((state) => state.score.isModal);
+	const scores = useSelector((state) => state.score.scores);
 
-	const postNote = () => {};
+	const postNote = () => {
+		console.log(scores);
+		// const data = {
+		// 	userNick: nickname.current.value,
+		// 	userPw: pw.current.value,
+		// 	contents: comment.current.value,
+		// 	index: window.location.pathname.split('/')[2],
+		// 	scoreId: noteInfo.index,
+		// };
+		// dispatch(postNoteMD(data));
+	};
 	return (
 		<>
 			{isModal &&
-				(noteInfo ? (
+				(!noteInfo ? (
 					<Memo>
 						<ExitBtn>
 							<CgCloseO
@@ -39,7 +51,7 @@ const Modal = () => {
 						<Input ref={comment} />
 						<Label>비밀번호를 입력해주세요</Label>
 						<Input ref={pw} />
-						<PostBtn>남기기</PostBtn>
+						<PostBtn onClick={postNote}>남기기</PostBtn>
 					</Memo>
 				))}
 		</>
