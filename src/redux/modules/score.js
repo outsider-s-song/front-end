@@ -17,6 +17,9 @@ const scoreSlice = createSlice({
 		GetNoteInfo: (state, { payload }) => {
 			state.noteInfo = payload;
 		},
+		UpdateNoteInfo: (state, { payload }) => {
+			state.noteInfo = payload;
+		},
 	},
 	extraReducers: {
 		[getScoresListMD.fulfilled]: (state, { payload }) => {

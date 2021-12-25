@@ -11,3 +11,14 @@ export const getScoresListMD = createAsyncThunk('score/get', async (data, thunkA
 		return thunkAPI.rejectWithValue(err);
 	}
 });
+
+export const postNoteMD = createAsyncThunk('score/post', async (data, thunkAPI) => {
+	try {
+		const response = await apis.addNoteAPI(data);
+		if (response) {
+			return response;
+		}
+	} catch (err) {
+		return thunkAPI.rejectWithValue(err);
+	}
+});
