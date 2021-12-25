@@ -25,7 +25,7 @@ const scoreSlice = createSlice({
 	},
 	extraReducers: {
 		[getScoresListMD.fulfilled]: (state, { payload }) => {
-			console.log(payload);
+			state.scores = payload.data;
 		},
 		[postNoteMD.fulfilled]: (state, { payload }) => {
 			const idx = state.noteInfo.index;

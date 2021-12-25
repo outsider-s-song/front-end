@@ -14,6 +14,7 @@ const Modal = () => {
 
 	const noteInfo = useSelector((state) => state.score.noteInfo);
 	const isModal = useSelector((state) => state.score.isModal);
+
 	const score = useSelector((state) => state.score.score);
 	const list = useSelector((state) => state.score.test);
 
@@ -31,6 +32,7 @@ const Modal = () => {
 			dispatch(postNoteMD(data));
 		}
 	};
+
 	return (
 		<>
 			{isModal &&
