@@ -18,14 +18,18 @@ const Modal = () => {
 	const list = useSelector((state) => state.score.test);
 
 	const postNote = () => {
-		const data = {
-			userNick: nickname.current.value,
-			userPw: pw.current.value,
-			contents: comment.current.value,
-			index: noteInfo.index,
-			scoreId: Number(window.location.pathname.split('/')[2]),
-		};
-		dispatch(postNoteMD(data));
+		if (!nickname.current.value || !pw.current.value || !comment.current.value) {
+			alert('내용을 전부 채워주세요!');
+		} else {
+			const data = {
+				userNick: nickname.current.value,
+				userPw: pw.current.value,
+				contents: comment.current.value,
+				index: noteInfo.index,
+				scoreId: Number(window.location.pathname.split('/')[2]),
+			};
+			dispatch(postNoteMD(data));
+		}
 	};
 	return (
 		<>
