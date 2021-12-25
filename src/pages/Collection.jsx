@@ -1,19 +1,35 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { apis } from '../axios';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { addScoreList } from '../redux/modules/collection';
 
 import CollectionCard from '../components/CollectionCard';
 
 const Collection = () => {
+	const scoreList = useSelector((state) => state.collection.scoreList);
+	const dispatch = useDispatch();
+	React.useEffect(() => {
+		apis.getScoresListAPI()
+			.then((res) => {
+				const data = res.data;
+				dispatch(addScoreList(data));
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 	return (
 		<>
 			<Contents>
 				<Title>아싸들의 연주</Title>
 				<ul>
-					<CollectionCard />
-					<CollectionCard />
-					<CollectionCard />
-					<CollectionCard />
-					<CollectionCard />
+					{scoreList.map((l, idx) => {
+						return (
+							<CollectionCard cardId={l.scoredId} key={idx} noteList={l.noteList} />
+						);
+					})}
 				</ul>
 			</Contents>
 		</>
