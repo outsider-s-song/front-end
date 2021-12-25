@@ -1,19 +1,28 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Note from './Note';
 
 const NoteContainer = () => {
-	const location = [];
-	for (let i = 0; i < 64; i++) {
-		location.push(i);
-	}
+	const notes = useSelector((state) => state.score.score);
 
 	return (
 		<>
 			<Container>
-				{location.map((num, idx) => (
-					<Note key={idx} location={num} />
-				))}
+				{notes.length > 0 &&
+					notes?.map((note, idx) => (
+						<Note
+							key={idx}
+							color={note.color}
+							content={note.content}
+							index={note.index}
+							note={note.note}
+							noteId={note.id}
+							scoreId={note.scoreId}
+							status={note.status}
+							userNick={note.userNick}
+						/>
+					))}
 			</Container>
 		</>
 	);
