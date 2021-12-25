@@ -17,11 +17,11 @@ const CollectionCard = (props) => {
 		<>
 			<Card cardId="1" onClick={cardClick}>
 				<button onClick={playEvent}>
-					{play ? (
+					{/* {play ? (
 						<FaPlay size="100%" fill="white" />
 					) : (
 						<FaPause size="100%" fill="white" />
-					)}
+					)} */}
 				</button>
 			</Card>
 		</>
