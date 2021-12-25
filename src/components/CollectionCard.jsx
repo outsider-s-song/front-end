@@ -1,15 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 import { FaPlay, FaPause } from 'react-icons/fa';
 import styled, { css } from 'styled-components';
 
-const CollectionCard = () => {
+const CollectionCard = (props) => {
 	const [play, setPlay] = React.useState(true);
-	const playEvent = () => {
+	const navigate = useNavigate();
+	const playEvent = (e) => {
 		setPlay(!play);
+		e.stopPropagation();
+	};
+	const cardClick = () => {
+		navigate(`/score/${props.cardId}`);
 	};
 	return (
 		<>
-			<Card>
+			<Card cardId="1" onClick={cardClick}>
 				<button onClick={playEvent}>
 					{play ? (
 						<FaPlay size="100%" fill="white" />
