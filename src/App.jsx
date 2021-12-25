@@ -8,8 +8,8 @@ const App = () => {
 		<>
 			<BrowserRouter>
 				<Routes>
-					<Route path="/" element={<Socre />} />
-					<Route path="/collection" element={<Collection />} />
+					<Route path="/score/:id" element={<Socre />} />
+					<Route path="/" element={<Collection />} />
 				</Routes>
 			</BrowserRouter>
 		</>
