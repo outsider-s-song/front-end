@@ -20,13 +20,12 @@ const App = () => {
 
 	return (
 		<>
-			<h1>깃액션테스트점..!</h1>
-			<h1>tone</h1>
+			{/* <h1>tone</h1>
 			<button onClick={getNote}>getNote</button>
 			<br />
 			<h1>{number}</h1>
 			<button onClick={() => dispatch(add())}>plus</button>
-			<button onClick={() => dispatch(minus())}>minus</button>
+			<button onClick={() => dispatch(minus())}>minus</button> */}
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<Socre />} />
