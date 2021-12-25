@@ -7,6 +7,7 @@ import thunkMiddleware from 'redux-thunk';
 
 // * import slices
 import scoreSlice from './modules/score';
+import collectionSlice from './modules/collection';
 
 export const history = createBrowserHistory();
 
@@ -14,6 +15,7 @@ export const history = createBrowserHistory();
 const reducer = combineReducers({
 	router: connectRouter(history),
 	score: scoreSlice.reducer,
+	collection: collectionSlice.reducer,
 });
 
 const middlewares = [thunkMiddleware];
