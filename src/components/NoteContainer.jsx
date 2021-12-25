@@ -5,6 +5,7 @@ import Note from './Note';
 
 const NoteContainer = () => {
 	const notes = useSelector((state) => state.score.score);
+	console.log(notes);
 
 	return (
 		<>

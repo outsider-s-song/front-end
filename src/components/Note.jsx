@@ -39,7 +39,6 @@ Note.defaultProps = {
 	userNick: 'kyuung',
 	note: ['G4', '16n'],
 };
-// #224732
 
 const NoteFront = styled.button`
 	border: none;
@@ -57,10 +56,11 @@ const NoteFront = styled.button`
 	transition: opacity 180ms ease-in-out;
 	transition: transform 250ms ease-in-out;
 	background: radial-gradient(
-		circle at 70px 70px,
-		${(props) => (props.status ? props.color : '#224732')},
+		circle at 55px 55px,
+		${(props) => (props.status ? props.color : '#000')},
 		#fff
 	);
+
 	transform-style: preserve-3d;
 	transform-origin: right;
 `;

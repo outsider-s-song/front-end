@@ -8,6 +8,7 @@ import { CgPlayButtonO, CgPlayPauseO, CgMenuGridO } from 'react-icons/cg';
 import { useNavigate } from 'react-router';
 import * as Tone from 'tone';
 import { getNoteListMD, getScoresListMD } from '../redux/async/score';
+import LetItSnow from '../components/LetItSnow';
 
 const Socre = () => {
 	const disptach = useDispatch();
@@ -38,11 +39,12 @@ const Socre = () => {
 					disptach(UpdateModal(false));
 				}}
 			>
-				<Title>Score 1</Title>
+				<Title>Score {window.location.pathname.split('/')[2]}</Title>
 				<div onClick={(e) => e.stopPropagation()}>
 					<GoToCollection onClick={() => navigate('/')}>
 						<CgMenuGridO cursor="pointer" size="6rem" color="white" />
 					</GoToCollection>
+					<LetItSnow />
 
 					<PlayerContainer>
 						{musicStatus ? (
@@ -91,7 +93,7 @@ const Background = styled.section`
 	align-items: center;
 	width: 100vw;
 	height: 100vh;
-	background-color: #132326;
+	background-color: #000;
 `;
 
 const PlayerContainer = styled.div`
