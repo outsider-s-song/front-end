@@ -13,7 +13,7 @@ export const history = createBrowserHistory();
 // * reducers
 const reducer = combineReducers({
 	router: connectRouter(history),
-	count: scoreSlice.reducer,
+	score: scoreSlice.reducer,
 });
 
 const middlewares = [thunkMiddleware];
