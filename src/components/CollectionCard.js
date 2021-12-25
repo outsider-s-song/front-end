@@ -1,13 +1,21 @@
 import React from 'react';
-import { AiFillPlayCircle } from 'react-icons/ai';
+import { FaPlay, FaPause } from 'react-icons/fa';
 import styled, { css } from 'styled-components';
 
 const CollectionCard = () => {
+	const [play, setPlay] = React.useState(true);
+	const playEvent = () => {
+		setPlay(!play);
+	};
 	return (
 		<>
 			<Card>
-				<button>
-					<AiFillPlayCircle size="100%" fill="white" />
+				<button onClick={playEvent}>
+					{play ? (
+						<FaPlay size="100%" fill="white" />
+					) : (
+						<FaPause size="100%" fill="white" />
+					)}
 				</button>
 			</Card>
 		</>
