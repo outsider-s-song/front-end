@@ -1,4 +1,4 @@
-name: CRA(Create React App) Build & deploy on AWS S3 + CloudFront invalidate
+name: CRA(Create React App) Build & deploy on AWS S3
 on:
     push:
         branches:
@@ -33,4 +33,4 @@ jobs:
                   aws s3 cp \
                     --recursive \
                     --region ap-northeast-2 \
-                    build s3://${{secrets.S3_BUCKET_NAME}}                  # S3 Bucket Name
+                    build s3://${{secrets.S3_BUCKET_NAME}}
