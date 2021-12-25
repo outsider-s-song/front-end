@@ -6,6 +6,7 @@ const initialState = {
 	scores: {},
 	noteInfo: {},
 	score: {},
+	test: {},
 };
 
 const scoreSlice = createSlice({
@@ -27,7 +28,11 @@ const scoreSlice = createSlice({
 			console.log(payload);
 		},
 		[postNoteMD.fulfilled]: (state, { payload }) => {
-			// console.log('scores:::', state.scores);
+			const idx = state.noteInfo.index;
+			const list = state.score[idx];
+			state.score[idx].status = true;
+			state.test = list;
+			state.isModal = false;
 		},
 		[getNoteListMD.fulfilled]: (state, { payload }) => {
 			state.score = payload.data;

@@ -14,23 +14,23 @@ const Modal = () => {
 
 	const noteInfo = useSelector((state) => state.score.noteInfo);
 	const isModal = useSelector((state) => state.score.isModal);
-	const scores = useSelector((state) => state.score.scores);
+	const score = useSelector((state) => state.score.score);
+	const list = useSelector((state) => state.score.test);
 
 	const postNote = () => {
-		console.log(scores);
-		// const data = {
-		// 	userNick: nickname.current.value,
-		// 	userPw: pw.current.value,
-		// 	contents: comment.current.value,
-		// 	index: window.location.pathname.split('/')[2],
-		// 	scoreId: noteInfo.index,
-		// };
-		// dispatch(postNoteMD(data));
+		const data = {
+			userNick: nickname.current.value,
+			userPw: pw.current.value,
+			contents: comment.current.value,
+			index: noteInfo.index,
+			scoreId: Number(window.location.pathname.split('/')[2]),
+		};
+		dispatch(postNoteMD(data));
 	};
 	return (
 		<>
 			{isModal &&
-				(!noteInfo ? (
+				(noteInfo.status ? (
 					<Memo>
 						<ExitBtn>
 							<CgCloseO
@@ -45,7 +45,13 @@ const Modal = () => {
 					</Memo>
 				) : (
 					<Memo>
-						<Label>이름을 입력해주세요</Label>
+						<Label
+							onClick={() => {
+								console.log(list);
+							}}
+						>
+							이름을 입력해주세요
+						</Label>
 						<Input ref={nickname} />
 						<Label>한마디를 남겨주세요</Label>
 						<Input ref={comment} />
